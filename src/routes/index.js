@@ -16,23 +16,24 @@ router.get("/signup", (req, res) => {
 
 router.post("/signup", (req, res, next) => {
   passport.authenticate("signup", passportOptions, (err, user, info) => {
-    logger.info("Informacion de registro");
-    logger.info(err, user, info);
+      logger.info("Informacion de registro");
+      logger.info(err, user, info);
 
-    if (err) {
-      logger.err(err);
+      if (err) {
+        logger.error(err);
 
-      return next(err);
-    }
+        return next(err);
+      }
 
-    if (!user) {
-      logger.error("Error de registro");
+      if (!user) {
+        logger.error("Error de registro");
 
-      return res.status(401).json({
-        msg: "Error de regristo",
-      });
-    } else res.json({ msg: "Registro completado" });
-  })(req, res, next);
+        return res.status(401).json({
+          msg: "Error de regristo",
+        });
+      } else
+        res.json({ msg: "Registro completado" });
+    })(req, res, next);
 });
 
 export default router;

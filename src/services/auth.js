@@ -2,10 +2,10 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { UserModel } from "../models/user";
 import { logger } from "../logs";
-import { CarritoModel } from "../models/carritos";
+import { CartModel } from "../models/carritos";
 
 const StrategyOptions = {
-  userNameField: "email",
+  usernameField: "email",
   passwordField: "password",
   passReqToCallback: true,
 };
@@ -30,7 +30,7 @@ const signup = async (req, email, password, done) => {
   try {
     logger.info("Registro!!!");
 
-    const { email, password } = req.body;
+    const { nombre, apellido, edad, telefono, direccion, email, password } = req.body;
 
     logger.info(req.body);
 
@@ -52,16 +52,16 @@ const signup = async (req, email, password, done) => {
 
       return done(null, false, { msg: "El usuario ya existe" });
     } else {
-      const newCart = await CarritoModel.create();
+      const cart = await CartModel.create({})
       const userData = {
-        name,
-        surname,
-        age,
-        cellphone,
-        adress,
+        nombre,
+        apellido,
+        edad,
+        telefono,
+        direccion,
         email,
         password,
-        newCart
+        cart
       };
 
       const newUser = await UserModel.create(userData);

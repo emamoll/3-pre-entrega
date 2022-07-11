@@ -2,23 +2,23 @@ import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
 const UserSchema = new Schema({
-  name: {
+  nombre: {
     type: String,
     required: true,
   },
-  surname: {
+  apellido: {
     type: String,
     required: true,
   },
-  age: {
+  edad: {
     type: Number,
     required: true,
   },
-  cellphone: {
+  telefono: {
     type: String,
     required: true,
   },
-  adress: {
+  direccion: {
     type: String,
     required: true,
   },
@@ -31,9 +31,16 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  cart: {
+    type: Schema.ObjectId,
+    ref: "carts",
+    default: function () {
+      return this._id;
+    },
+  },
 });
 
-UserSchema.pre("save", async (next) => {
+UserSchema.pre("save", async function (next) {
   const user = this;
   const hash = await bcrypt.hash(user.password, 10);
 
