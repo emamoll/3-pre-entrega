@@ -11,14 +11,14 @@ const StrategyOptions = {
 };
 
 const login = async (req, email, password, done) => {
-  logger.info("Acceso!!!");
+  logger.info("Login!!!");
 
   const user = await UserModel.findOne({ email });
 
   if (!user || !user.isValidPassword(password)) {
-    logger.error("Email o contrasenia incorrectos");
+    logger.warn("Email o contrasenia incorrectos");
 
-    return done(null, false, { msg: "Email o contrasenia incorrectos" });
+    return done(null, false, { message: "Email o contrasenia incorrectos" });
   } else {
     logger.info("Todo ok");
 
@@ -30,7 +30,8 @@ const signup = async (req, email, password, done) => {
   try {
     logger.info("Registro!!!");
 
-    const { nombre, apellido, edad, telefono, direccion, email, password } = req.body;
+    const { nombre, apellido, edad, telefono, direccion, email, password } =
+      req.body;
 
     logger.info(req.body);
 
@@ -52,7 +53,7 @@ const signup = async (req, email, password, done) => {
 
       return done(null, false, { msg: "El usuario ya existe" });
     } else {
-      const cart = await CartModel.create({})
+      const cart = await CartModel.create({});
       const userData = {
         nombre,
         apellido,
@@ -61,7 +62,7 @@ const signup = async (req, email, password, done) => {
         direccion,
         email,
         password,
-        cart
+        cart,
       };
 
       const newUser = await UserModel.create(userData);

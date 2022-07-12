@@ -2,7 +2,7 @@ import express from "express";
 import helmet from "helmet";
 import session from "express-session";
 import passport from "passport";
-import { loginFunc, signupFunc } from "./auth";
+import { loginFunc, signupFunc, usersFunc } from "./auth";
 import mainRouter from "../routes";
 
 const app = express();
